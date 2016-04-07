@@ -4,12 +4,12 @@
 #v1.0 15/02/2016
 
 #============parameters need to know before processing ===========  
-ori_dir="/home/SOFTWARES/GMT/t2_draw_interferograms/temp_int_data"  
-target_dir="/home/SOFTWARES/GMT/t2_draw_interferograms/interferograms"    
+ori_dir="/home/InSAR_Results/11Canillo_SPOT_ST/temp_int_data/"  
+target_dir="/home/InSAR_Results/11Canillo_SPOT_ST/interferograms/"    
 var=/phase_dif_mlook_3x3.dat  #the same suffix of each data
 var1=/phase_dif_mlook_3x3
 multilook=3x3
-R=0/1336/0/1732               #Specify range (Format:samples/lines)
+R=0/999/0/1332               #Specify range (Format:samples(1000)/lines(1333))
 
 #============Start processing ===========
 for file_a in ${ori_dir}/*; do  
@@ -22,7 +22,7 @@ for file_a in ${ori_dir}/*; do
     file_name_final=${file_a}/${file_name_result}         #e.g:/home/SOFTWARES/GMT/t2_draw_interferograms/temp_int_data/20101118.tsx1.20101129.tsx1/20101118_20101129_3x3
     
 # Translate binary data to grd by using xyz2grd
-#-R means range(samples1337,lines1733)
+#-R means range(samples1000,lines1333)
 #-I stands for interval
 #-D specification of xname/yname/zname
 #-ZTL means Z data starts from top-lift
@@ -36,7 +36,9 @@ for file_a in ${ori_dir}/*; do
     gmt grdimage -R$file_name_final.nc -JX15c/15c -Xc -Yc -C$file_a/new.cpt -B200 -B+t"Interferogram" $file_name_final.nc -K > $file_name_final.ps
 
 #Imaging color scale
-    gmt psscale -D17c/5c/8c/0.5c -C$file_a/new.cpt -E -B0.5 -P -O >> $file_name_final.ps
+     gmt psscale -Dx17c/0.5c+e+w8c/0.5c -C$file_a/new.cpt -B0.5 -P -O >> $file_name_final.ps
+
+    rm -f $file_name_final.nc $file_a/new.cpt 
 
 done
 

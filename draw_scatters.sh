@@ -95,8 +95,8 @@ gmt psbasemap -R$R -J$J -B$Bx -B$By -Xc -Yc \
      gmt psxy CangZhou.txt -R$R -J$J -Sc0.05c -Cnew.cpt -K -O >> $ps
 
 #Imaging color scale
-	gmt psscale -D17c/6.5c/12c/0.8c -Cnew.cpt -E -B5 -P -K -O >> $ps
-
+#	gmt psscale -D17c/6.5c/12c/0.8c -Cnew.cpt -E -B5 -P -K -O >> $ps
+	gmt psscale -Dx17c/0.5c+e+w12c/0.8c -Cnew.cpt -B5 -P -K -O >> $ps
 #To avoid the problem of -K -O
 	gmt psxy -J$J -R$R -T -O >> $ps  
 
